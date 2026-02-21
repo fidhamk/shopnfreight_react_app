@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import TopStats from '../components/TopStats.jsx';
+import TopStats from '../components/Topstats.jsx';
 import FilterBar from '../components/FilterBar.jsx';
 import ShipmentsTable from '../components/ShipmentsTable.jsx';
 import '../styles/Shipments.css';
