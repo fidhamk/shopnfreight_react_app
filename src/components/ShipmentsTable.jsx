@@ -1,6 +1,11 @@
+// src/components/ShipmentsTable.jsx
 export default function ShipmentsTable({ data }) {
+  if (!data || data.length === 0) {
+    return <p style={{ padding: '20px' }}>No shipments found</p>;
+  }
+
   return (
-    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <table className="shipments-table">
       <thead>
         <tr>
           <th>Shipment</th>
@@ -11,7 +16,7 @@ export default function ShipmentsTable({ data }) {
         </tr>
       </thead>
       <tbody>
-        {data.map(s => (
+        {data.map((s) => (
           <tr key={s.id}>
             <td>{s.id}</td>
             <td>{s.status}</td>
@@ -20,13 +25,6 @@ export default function ShipmentsTable({ data }) {
             <td>{s.arrived}</td>
           </tr>
         ))}
-        {data.length === 0 && (
-          <tr>
-            <td colSpan="5" style={{ textAlign: 'center', padding: '10px' }}>
-              No shipments found
-            </td>
-          </tr>
-        )}
       </tbody>
     </table>
   );

@@ -1,29 +1,43 @@
-import { shipmentsData } from '../data/shipmentsData.js';
-import TopStats from '../components/Topstats.jsx';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import TopStats from '../components/TopStats.jsx';
 import FilterBar from '../components/FilterBar.jsx';
 import ShipmentsTable from '../components/ShipmentsTable.jsx';
-import { useState } from 'react';
+import '../styles/Shipments.css';
 
-export default function Shipments() {
+export default function Shipments({ shipments }) {
   const [filterStatus, setFilterStatus] = useState('All');
   const [filterWarehouse, setFilterWarehouse] = useState('All');
 
-  const filteredData = shipmentsData.filter(
-    s => (filterStatus === 'All' || s.status === filterStatus) &&
-         (filterWarehouse === 'All' || s.warehouse === filterWarehouse)
+  const filteredData = shipments.filter(
+    s =>
+      (filterStatus === 'All' || s.status === filterStatus) &&
+      (filterWarehouse === 'All' || s.warehouse === filterWarehouse)
   );
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Shipments Dashboard</h1>
-      <TopStats data={shipmentsData} />
+    <div className="shipments-page">
+      <div className="shipments-header">
+        <h1>Shipments Dashboard</h1>
+        <Link to="/shipments/create">
+          <button className="create-shipment-btn">
+            Create New Shipment
+          </button>
+        </Link>
+      </div>
+
+      <TopStats data={shipments} />
+
       <FilterBar
         filterStatus={filterStatus}
         setFilterStatus={setFilterStatus}
         filterWarehouse={filterWarehouse}
         setFilterWarehouse={setFilterWarehouse}
       />
-      <ShipmentsTable data={filteredData} />
+
+      <div className="shipments-table-container">
+        <ShipmentsTable data={filteredData} />
+      </div>
     </div>
   );
 }

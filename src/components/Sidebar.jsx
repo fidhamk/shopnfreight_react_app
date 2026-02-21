@@ -1,9 +1,12 @@
+import "../styles/sidebar.css";
+
 export default function Sidebar() {
   return (
-    <div style={{ width: '200px', background: '#f5f5f5', padding: '20px' }}>
-      <h2>Menu</h2>
-      <ul>
-        <li>Shipments</li>
+    <div className="sidebar">
+      <h2 className="sidebar-title">Shopnfreight</h2>
+
+      <ul className="sidebar-menu">
+        <li className="active">Shipments</li>
         <li>Dashboard</li>
         <li>Settings</li>
       </ul>

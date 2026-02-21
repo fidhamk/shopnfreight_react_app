@@ -1,7 +1,16 @@
-export default function FilterBar({ filterStatus, setFilterStatus, filterWarehouse, setFilterWarehouse }) {
+// src/components/FilterBar.jsx
+export default function FilterBar({
+  filterStatus,
+  setFilterStatus,
+  filterWarehouse,
+  setFilterWarehouse,
+}) {
   return (
-    <div style={{ marginBottom: '20px' }}>
-      <select onChange={e => setFilterStatus(e.target.value)} value={filterStatus}>
+    <div className="filters-container">
+      <select
+        value={filterStatus}
+        onChange={(e) => setFilterStatus(e.target.value)}
+      >
         <option value="All">All Status</option>
         <option value="Arrived">Arrived</option>
         <option value="On Hold">On Hold</option>
@@ -9,13 +18,13 @@ export default function FilterBar({ filterStatus, setFilterStatus, filterWarehou
       </select>
 
       <select
-        onChange={e => setFilterWarehouse(e.target.value)}
         value={filterWarehouse}
-        style={{ marginLeft: '10px' }}
+        onChange={(e) => setFilterWarehouse(e.target.value)}
       >
         <option value="All">All Warehouses</option>
         <option value="UAE">UAE</option>
         <option value="KSA">KSA</option>
+        <option value="China">China</option>
       </select>
     </div>
   );
