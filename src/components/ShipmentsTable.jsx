@@ -1,4 +1,5 @@
-// src/components/ShipmentsTable.jsx
+import { Link } from 'react-router-dom';
+
 export default function ShipmentsTable({ data }) {
   if (!data || data.length === 0) {
     return <p style={{ padding: '20px' }}>No shipments found</p>;
@@ -18,7 +19,9 @@ export default function ShipmentsTable({ data }) {
       <tbody>
         {data.map((s) => (
           <tr key={s.id}>
-            <td>{s.id}</td>
+            <td>
+              <Link to={`/shipments/${s.id}`}>{s.id}</Link>
+            </td>
             <td>{s.status}</td>
             <td>{s.warehouse}</td>
             <td>{s.weight}</td>

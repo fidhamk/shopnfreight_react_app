@@ -21,9 +21,9 @@ export default function ShipmentForm({ addShipment }) {
   const [errors, setErrors] = useState({});
   const [suggestions, setSuggestions] = useState([]);
 
+  // Validate form fields
   const validate = () => {
     const newErrors = {};
-
     const suitExists = customers.some(
       (c) => c.suit.toLowerCase() === formData.suitNumber.toLowerCase()
     );
@@ -50,6 +50,7 @@ export default function ShipmentForm({ addShipment }) {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Suit number auto-suggestion
   const handleSuitChange = (e) => {
     const value = e.target.value;
     setFormData({ ...formData, suitNumber: value });
@@ -60,19 +61,39 @@ export default function ShipmentForm({ addShipment }) {
     setSuggestions(filtered);
   };
 
-  const handleSubmit = (e) => {
+  // Form submit handler with dummy API POST
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
 
     const newShipment = {
       id: `SHP-${Date.now()}`,
       status: "Arrived",
-      arrived: "yes",
-      ...formData,
+      warehouse: formData.warehouse,
+      weight: `${formData.weight} kg`,
+      title: formData.suitNumber,
+      length: formData.length,
+      width: formData.width,
+      height: formData.height,
+      arrived: "Yes", // <--- ADD THIS LINE
     };
 
-    addShipment(newShipment);
-    navigate("/shipments");
+    try {
+      // Dummy POST request
+      await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newShipment),
+      });
+
+      // Update App.jsx state so dashboard shows the new shipment
+      addShipment(newShipment);
+
+      // Navigate back to shipments dashboard
+      navigate("/shipments");
+    } catch (err) {
+      alert("Failed to submit shipment: " + err.message);
+    }
   };
 
   return (
@@ -131,7 +152,7 @@ export default function ShipmentForm({ addShipment }) {
           )}
         </div>
 
-        {/* Weight, Length, Width, Height in 2 rows */}
+        {/* Weight, Length */}
         <div className="form-row">
           <div className="form-group">
             <label>Weight (kg)</label>
@@ -158,6 +179,7 @@ export default function ShipmentForm({ addShipment }) {
           </div>
         </div>
 
+        {/* Width, Height */}
         <div className="form-row">
           <div className="form-group">
             <label>Width (cm)</label>
